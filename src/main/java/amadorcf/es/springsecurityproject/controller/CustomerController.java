@@ -1,5 +1,8 @@
 package amadorcf.es.springsecurityproject.controller;
 
+import amadorcf.es.springsecurityproject.dto.RegisteredUser;
+import amadorcf.es.springsecurityproject.dto.SaveUser;
+import amadorcf.es.springsecurityproject.service.auth.AuthenticacionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +19,10 @@ public class CustomerController {
     @Autowired
     private AuthenticacionService authenticacionService;
 
+    // DTO de respuesta (respoonse) => RegisteredUser
+    // DTO de peticion (request) => SaveUser
     @PostMapping
-    public ResponseEntity<RegisterUser> registerOne(@RequestBody @Valid SaveUser newUser){
+    public ResponseEntity<RegisteredUser> registerOne(@RequestBody @Valid SaveUser newUser){
 
         // Este DTO nunca sera nulo ya que Jpa nunca devuelve una respuesta nula
         RegisteredUser registeredUser = authenticacionService.registerOneCustomer(newUser);
