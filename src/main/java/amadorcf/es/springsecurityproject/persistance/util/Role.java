@@ -33,7 +33,6 @@ public enum Role {
         RolePermission.READ_MY_PROFILE
     )),
     ROLE_CUSTOMER(Arrays.asList(
-
         RolePermission.READ_MY_PROFILE
     ));
 
