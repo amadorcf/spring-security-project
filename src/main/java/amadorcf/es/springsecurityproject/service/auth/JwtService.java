@@ -17,7 +17,6 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-
     @Value("${security.jwt.expiration-in-minutes}")
     private Long EXPIRATION_IN_MINUTES;
 
