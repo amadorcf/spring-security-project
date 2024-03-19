@@ -27,7 +27,6 @@ public class User implements UserDetails {
 
     private String password;
 
-
     // Enumeracion de Roles - Se creara posteriormente la BBDD correspondiente
     @Enumerated(EnumType.STRING)
     private Role role;

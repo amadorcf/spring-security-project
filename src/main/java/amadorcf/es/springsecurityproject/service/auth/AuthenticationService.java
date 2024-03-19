@@ -82,4 +82,17 @@ public class AuthenticationService {
 
         return authRes;
     }
+
+    public boolean validateToken(String jwt) {
+
+        // Valida el header, la firma y el tiempo de validacion
+        try{
+            jwtService.extractUsername(jwt);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+    }
 }

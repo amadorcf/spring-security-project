@@ -31,7 +31,9 @@ public class UserServiceImpl implements UserService {
         // Validar usuario: no debe estar repetido para ello anotar en la clase User "@Column(unique = true)"
         User user = new User();
 
-        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+/*        String pass = passwordEncoder.encode(newUser.getPassword());
+        System.out.println(pass);*/
+        user.setPassword(passwordEncoder.encode(newUser.getPassword() ));
         user.setUsername(newUser.getUsername());
         user.setName(newUser.getName());
         user.setRole(Role.ROLE_CUSTOMER);

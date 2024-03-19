@@ -34,9 +34,9 @@ public class HttpSecurityConfig {
                 // Configuracion de las rutas
                 .authorizeHttpRequests( authReqConfig ->{
                     authReqConfig.requestMatchers(HttpMethod.POST, "/customers").permitAll();
-/*                    authReqConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
-                    authReqConfig.requestMatchers(HttpMethod.POST, "/auth/validate").permitAll();*/
-                    authReqConfig.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    authReqConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
+                    authReqConfig.requestMatchers(HttpMethod.GET, "/auth/validate-token").permitAll();
+                    //authReqConfig.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 
                     // Se pueden crear mas rutas publicas...
 
