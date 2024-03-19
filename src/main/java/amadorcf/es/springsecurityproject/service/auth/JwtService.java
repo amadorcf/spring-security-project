@@ -59,9 +59,13 @@ public class JwtService {
         return Keys.hmacShaKeyFor(passwordDecoded);
     }
 
-/*    public Claims extractAllClaims(String jwt){
-        return Jwts.parser()
-                .verifyWith( generateKey())
-                .build().parseEncryptedClaims(jwt).getPayload();
-    }*/
+    public String extractUsername(String jwt) {
+
+        return extractAllClaims(jwt).getSubject();
+    }
+
+    public Claims extractAllClaims(String jwt){
+        return Jwts.parser().verifyWith( generateKey() ).build()
+                .parseSignedClaims(jwt).getPayload();
+    }
 }
