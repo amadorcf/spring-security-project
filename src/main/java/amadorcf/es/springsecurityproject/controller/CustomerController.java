@@ -2,7 +2,7 @@ package amadorcf.es.springsecurityproject.controller;
 
 import amadorcf.es.springsecurityproject.dto.RegisteredUser;
 import amadorcf.es.springsecurityproject.dto.SaveUser;
-import amadorcf.es.springsecurityproject.service.auth.AuthenticacionService;
+import amadorcf.es.springsecurityproject.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     @Autowired
-    private AuthenticacionService authenticacionService;
+    private AuthenticationService authenticacionService;
 
     // DTO de respuesta (respoonse) => RegisteredUser
     // DTO de peticion (request) => SaveUser

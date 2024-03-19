@@ -51,6 +51,7 @@ public class JwtService {
 
     }
 
+    // Este metodo es para decodificar el password de la base de la firma
     private SecretKey generateKey(){
         byte[] passwordDecoded = Decoders.BASE64.decode(SECRET_KEY);
         System.out.println(new String(passwordDecoded));
@@ -58,9 +59,9 @@ public class JwtService {
         return Keys.hmacShaKeyFor(passwordDecoded);
     }
 
-    public Claims extractAllClaims(String jwt){
+/*    public Claims extractAllClaims(String jwt){
         return Jwts.parser()
                 .verifyWith( generateKey())
                 .build().parseEncryptedClaims(jwt).getPayload();
-    }
+    }*/
 }
