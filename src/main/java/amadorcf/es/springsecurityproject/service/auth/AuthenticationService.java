@@ -2,7 +2,7 @@ package amadorcf.es.springsecurityproject.service.auth;
 
 import amadorcf.es.springsecurityproject.dto.RegisteredUser;
 import amadorcf.es.springsecurityproject.dto.SaveUser;
-import amadorcf.es.springsecurityproject.dto.auth.AuthenticacionResponse;
+import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
 import amadorcf.es.springsecurityproject.persistance.entity.User;
 import amadorcf.es.springsecurityproject.service.UserService;
@@ -59,7 +59,7 @@ public class AuthenticationService {
     }
 
     // Metodo para hacer en LOGIN
-    public AuthenticacionResponse login(AuthenticationRequest authRequest) {
+    public AuthenticationResponse login(AuthenticationRequest authRequest) {
 
         // Crear objeto por LOGIN
         Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -77,7 +77,7 @@ public class AuthenticationService {
         String jwt = jwtService.generateToken(user, generateExtraClaims((User) user));
 
         // Generar respuesta
-        AuthenticacionResponse authRes = new AuthenticacionResponse();
+        AuthenticationResponse authRes = new AuthenticationResponse();
         authRes.setJwt(jwt);
 
         return authRes;

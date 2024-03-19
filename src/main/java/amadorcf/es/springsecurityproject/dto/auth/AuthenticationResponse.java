@@ -2,7 +2,7 @@ package amadorcf.es.springsecurityproject.dto.auth;
 
 import java.io.Serializable;
 
-public class AuthenticacionResponse implements Serializable {
+public class AuthenticationResponse implements Serializable {
 
     private String jwt;
 

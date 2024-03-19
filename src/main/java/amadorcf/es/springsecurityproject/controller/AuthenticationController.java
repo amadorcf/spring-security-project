@@ -1,6 +1,6 @@
 package amadorcf.es.springsecurityproject.controller;
 
-import amadorcf.es.springsecurityproject.dto.auth.AuthenticacionResponse;
+import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
 import amadorcf.es.springsecurityproject.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
@@ -19,10 +19,10 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticacionResponse> authenticate(
+    public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest authenticationRequest){
 
-        AuthenticacionResponse res = authenticationService.login(authenticationRequest);
+        AuthenticationResponse res = authenticationService.login(authenticationRequest);
 
         return ResponseEntity.ok(res);
     }
