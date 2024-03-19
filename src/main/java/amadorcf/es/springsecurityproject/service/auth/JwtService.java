@@ -38,12 +38,15 @@ public class JwtService {
                 //Payload
                 .subject(user.getUsername())
 
-                //Claims
+                // Signature
+                .signWith(generateKey(), Jwts.SIG.HS256)
+
+                // Extra Claims
                 .issuedAt(issuedAt)
                 .expiration(expiration)
                 .claims(extraClaims)
 
-                .signWith(generateKey(), Jwts.SIG.HS256)
+
 
                 .compact();
 
@@ -54,13 +57,12 @@ public class JwtService {
     // Este metodo es para decodificar el password de la base de la firma
     private SecretKey generateKey(){
         byte[] passwordDecoded = Decoders.BASE64.decode(SECRET_KEY);
-        System.out.println(new String(passwordDecoded));
+        //System.out.println(new String(passwordDecoded));
 
         return Keys.hmacShaKeyFor(passwordDecoded);
     }
 
     public String extractUsername(String jwt) {
-
         return extractAllClaims(jwt).getSubject();
     }
 
