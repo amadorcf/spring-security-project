@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        System.out.println("ENTRO EN EL FILTRO JWT AUTHENTICATION FILTER");
+        System.out.println("Lanzando JWT AUTHENTICATION FILTER");
 
         //1. Obtener encabezado http llamado Authorization
         String authorizationHeader = request.getHeader("Authorization");//Bearer jwt
@@ -58,7 +58,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 username, null, user.getAuthorities()
         );
+
+        // Obtenemos datos como la IP o el sesionID con WebAuthenticationDetails
         authToken.setDetails(new WebAuthenticationDetails(request));
+
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         //5. Ejecutar el registro de filtros

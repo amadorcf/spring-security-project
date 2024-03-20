@@ -39,7 +39,7 @@ public class HttpSecurityConfig {
                 // Agregamos Filtro antes de que se
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 
-                // Configuracion de las rutas
+                // Configuracion de las rutas publicas
                 .authorizeHttpRequests( authReqConfig ->{
                     authReqConfig.requestMatchers(HttpMethod.POST, "/customers").permitAll();
                     authReqConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
@@ -48,7 +48,7 @@ public class HttpSecurityConfig {
 
                     // Se pueden crear mas rutas publicas...
 
-                    // Aseguramos que el usuario tenga que estar autenticado
+                    // RUTAS PRIVADAS: Aseguramos que el usuario tenga que estar autenticado
                     authReqConfig.anyRequest().authenticated();
                 })
                 .build();

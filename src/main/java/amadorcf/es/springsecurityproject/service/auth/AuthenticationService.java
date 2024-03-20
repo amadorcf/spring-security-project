@@ -4,12 +4,14 @@ import amadorcf.es.springsecurityproject.dto.RegisteredUser;
 import amadorcf.es.springsecurityproject.dto.SaveUser;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
+import amadorcf.es.springsecurityproject.exception.ObjectNotFoundException;
 import amadorcf.es.springsecurityproject.persistance.entity.User;
 import amadorcf.es.springsecurityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -93,6 +95,21 @@ public class AuthenticationService {
             System.out.println(e.getMessage());
             return false;
         }
+
+    }
+
+    public User findLoggedInUser() {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(auth instanceof UsernamePasswordAuthenticationToken authToken){
+            String username = (String) authToken.getPrincipal();
+
+            return userService.findOneByUsername(username)
+                    .orElseThrow(() ->  new ObjectNotFoundException("User not found, ", username));
+        }
+
+        return null; // Esta instancia nunca se va a ejecutar ya que siempre se va a cumplir la condicion del if. Lo mantengo por si tuvieramos otras implementaciones de Authentication
 
     }
 }

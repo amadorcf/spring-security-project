@@ -2,6 +2,7 @@ package amadorcf.es.springsecurityproject.controller;
 
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
+import amadorcf.es.springsecurityproject.persistance.entity.User;
 import amadorcf.es.springsecurityproject.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<User> FindMyProfile(){
+        User user = authenticationService.findLoggedInUser();
+
+        return ResponseEntity.ok(user);
+    }
 
 
 }
