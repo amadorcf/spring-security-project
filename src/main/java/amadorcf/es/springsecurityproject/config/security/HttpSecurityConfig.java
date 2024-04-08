@@ -46,10 +46,10 @@ public class HttpSecurityConfig {
 
                 // AUTORIZACION POR PETICIONES HTTP y permisos
                 // Configuracion de las rutas publicas
-                .authorizeHttpRequests( authReqConfig ->{
-
-                    buildRequestMatchersV2(authReqConfig);
-                })
+//                .authorizeHttpRequests( authReqConfig ->{
+//
+//                    buildRequestMatchersV2(authReqConfig);
+//                })
                 .build();
 
         return filterChain;
