@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -39,7 +40,7 @@ public class User implements UserDetails {
 
         if(role.getPermissions() == null) return null;
 
-        return role.getPermissions().stream()
+        List<SimpleGrantedAuthority> authorities = role.getPermissions().stream()
                 .map(each-> each.name())
                 .map(each -> new SimpleGrantedAuthority(each))
 //                .map(each->{
@@ -48,6 +49,8 @@ public class User implements UserDetails {
 //                })
                 .collect(Collectors.toList());
 
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.role.name()));
+        return authorities;
     }
 
     @Override
