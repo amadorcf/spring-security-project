@@ -7,6 +7,7 @@ import amadorcf.es.springsecurityproject.service.auth.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,12 +33,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(res);
     }
 
+    /*@PreAuthorize("hasAnyRole('ADMINISTRATOR', 'ASSISTANT_ADMINISTRATOR', 'CUSTOMER')")
     @GetMapping("/profile")
     public ResponseEntity<User> FindMyProfile(){
         User user = authenticationService.findLoggedInUser();
 
         return ResponseEntity.ok(user);
-    }
+    }*/
 
 
 }

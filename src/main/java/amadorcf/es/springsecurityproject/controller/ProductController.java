@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     //
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'ASSISTANT_ADMINISTRATOR')")
     @GetMapping
     public ResponseEntity<Page<Product>> findAll(Pageable pageable){
 
@@ -39,6 +41,7 @@ public class ProductController {
         return ResponseEntity.notFound().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'ASSISTANT_ADMINISTRATOR')")
     @GetMapping("/{productId}")
     public ResponseEntity<Product> findOneById(@PathVariable Long productId){
 
@@ -56,6 +59,7 @@ public class ProductController {
     }
 
     // Metodo que recibe el DTO saveProduct
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PostMapping
     public ResponseEntity<Product> createOne(@RequestBody @Valid SaveProduct saveProduct){
 
@@ -65,6 +69,8 @@ public class ProductController {
 
     }
 
+
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'ASSISTANT_ADMINISTRATOR')")
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updateOneById(@PathVariable Long productId,
                                                  @RequestBody @Valid SaveProduct saveProduct){
@@ -75,6 +81,7 @@ public class ProductController {
 
     }
 
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PutMapping("/{productId}/disabled")
     public ResponseEntity<Product> disabledOneById(@PathVariable Long productId){
 

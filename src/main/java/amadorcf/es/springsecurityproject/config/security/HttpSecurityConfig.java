@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true) // Necesario para autorizacion mediante anotaciones
 public class HttpSecurityConfig {
 
     @Autowired
@@ -46,14 +48,14 @@ public class HttpSecurityConfig {
                 // Configuracion de las rutas publicas
                 .authorizeHttpRequests( authReqConfig ->{
 
-                    buildRequesMatchers(authReqConfig);
+                    buildRequestMatchersV2(authReqConfig);
                 })
                 .build();
 
         return filterChain;
     }
 
-    private static void buildRequesMatchers(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authReqConfig) {
+    private static void buildRequestMatchers(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authReqConfig) {
         /*Autorizacion de endpoints de productos*/
         authReqConfig.requestMatchers(HttpMethod.GET, "/products")
                 .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
@@ -115,4 +117,21 @@ public class HttpSecurityConfig {
         authReqConfig.anyRequest().authenticated();
     }
 
+    private static void buildRequestMatchersV2(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry authReqConfig) {
+
+
+        /*RUTAS PUBLICAS:*/
+        authReqConfig.requestMatchers(HttpMethod.POST, "/customers").permitAll();
+        authReqConfig.requestMatchers(HttpMethod.POST, "/auth/authenticate").permitAll();
+        authReqConfig.requestMatchers(HttpMethod.GET, "/auth/validate-token").permitAll();
+        //authReqConfig.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+
+        // Se pueden crear mas rutas publicas...
+
+        // RUTAS PRIVADAS: Aseguramos que el usuario tenga que estar autenticado
+        authReqConfig.anyRequest().authenticated();
+    }
+
 }
+
+
