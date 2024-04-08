@@ -13,8 +13,9 @@ public class SpringSecurityProjectApplication {
 		SpringApplication.run(SpringSecurityProjectApplication.class, args);
 	}
 
-	// Codificamos contraseñas para las pruebas de usuario del imports.sql
-/*	@Bean
+/* Codificamos contraseñas para las pruebas de usuario del imports.sql
+
+	@Bean
 	public CommandLineRunner createPasswordsCommand(PasswordEncoder passwordEncoder){
 		return args -> {
 			System.out.println(passwordEncoder.encode("clave123"));

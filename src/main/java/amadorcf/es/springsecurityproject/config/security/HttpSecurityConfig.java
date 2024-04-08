@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AuthorizeH
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -58,7 +59,9 @@ public class HttpSecurityConfig {
                 .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
                 //.hasAuthority(RolePermission.READ_ALL_PRODUCTS.name());
 
-        authReqConfig.requestMatchers(HttpMethod.GET, "/products/{productId}")
+        // Autorizacion mediante una expresion regular Regex
+        //authReqConfig.requestMatchers(HttpMethod.GET, "/products/{productId}")
+        authReqConfig.requestMatchers(RegexRequestMatcher.regexMatcher(HttpMethod.GET, "/products/[0-9]*"))
                 .hasAnyRole(Role.ADMINISTRATOR.name(), Role.ASSISTANT_ADMINISTRATOR.name());
                 //.hasAuthority(RolePermission.READ_ONE_PRODUCT.name());
 
