@@ -1,20 +1,19 @@
 package amadorcf.es.springsecurityproject.config.security;
 
 import amadorcf.es.springsecurityproject.config.security.filter.JwtAuthenticationFilter;
-import amadorcf.es.springsecurityproject.config.security.handler.CustomAuthoritationEntryPoint;
 import amadorcf.es.springsecurityproject.persistance.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
@@ -34,6 +33,9 @@ public class HttpSecurityConfig {
 
     @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -59,8 +61,8 @@ public class HttpSecurityConfig {
                     buildRequestMatchers(authReqConfig);
                 })
                 .exceptionHandling(exceptionConfig ->{
-
                     exceptionConfig.authenticationEntryPoint(authenticationEntryPoint);
+                    exceptionConfig.accessDeniedHandler(accessDeniedHandler);
                 })
                 .build();
 

@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -16,16 +15,16 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+// Manejo de excepciones 403 de solicitudes HTTP
 @Component
-public class CustomAuthoritationEntryPoint implements AuthenticationEntryPoint {
-
+public class CustomAuthorizationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
         ApiError apiError = new ApiError();
         apiError.setBackendMessage(authException.getLocalizedMessage());
-        apiError.setMessage("Authentication credtentials not found. Please, log in to access this feature.");
+        apiError.setMessage("Authentication credentials not found. Please, log in to access this feature.");
         apiError.setUrl(request.getRequestURL().toString());
         apiError.setMethod(request.getMethod());
         apiError.setTimestamp(LocalDateTime.now());

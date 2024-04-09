@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
 
-    // Exccepcion 403 para cuando no se tienen los permisos de rol necesarios
+    // Manejo de excepciones basada en metodos seguros
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handlerGenericException(AccessDeniedException exception,
                                                      HttpServletRequest request){
