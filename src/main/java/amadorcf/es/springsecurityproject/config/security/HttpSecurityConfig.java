@@ -1,6 +1,7 @@
 package amadorcf.es.springsecurityproject.config.security;
 
 import amadorcf.es.springsecurityproject.config.security.filter.JwtAuthenticationFilter;
+import amadorcf.es.springsecurityproject.config.security.handler.CustomAuthoritationEntryPoint;
 import amadorcf.es.springsecurityproject.persistance.util.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,13 +13,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true) // Necesario para autorizacion mediante anotaciones
+// Necesario para autorizacion mediante anotaciones
+// Se deshabilita esta parte para volver a la autorizacion basada en HTTP
+// Imoortante volver a incorporar .authorizeHttpRequests mas abajo
+//@EnableMethodSecurity(prePostEnabled = true)
 public class HttpSecurityConfig {
 
     @Autowired
@@ -26,6 +31,9 @@ public class HttpSecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,10 +54,14 @@ public class HttpSecurityConfig {
 
                 // AUTORIZACION POR PETICIONES HTTP y permisos
                 // Configuracion de las rutas publicas
-//                .authorizeHttpRequests( authReqConfig ->{
-//
-//                    buildRequestMatchersV2(authReqConfig);
-//                })
+                .authorizeHttpRequests( authReqConfig ->{
+
+                    buildRequestMatchers(authReqConfig);
+                })
+                .exceptionHandling(exceptionConfig ->{
+
+                    exceptionConfig.authenticationEntryPoint(authenticationEntryPoint);
+                })
                 .build();
 
         return filterChain;

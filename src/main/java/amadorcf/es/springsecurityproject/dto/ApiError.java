@@ -1,5 +1,7 @@
 package amadorcf.es.springsecurityproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class ApiError {
@@ -8,6 +10,9 @@ public class ApiError {
     private String message;
     private String url;
     private String method;
+
+    // Se cambia el formato de fecha
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDateTime timestamp;
 
     public String getBackendMessage() {

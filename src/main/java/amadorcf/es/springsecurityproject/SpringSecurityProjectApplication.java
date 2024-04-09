@@ -13,6 +13,7 @@ public class SpringSecurityProjectApplication {
 		SpringApplication.run(SpringSecurityProjectApplication.class, args);
 	}
 
+
 /* Codificamos contraseñas para las pruebas de usuario del imports.sql
 
 	@Bean
