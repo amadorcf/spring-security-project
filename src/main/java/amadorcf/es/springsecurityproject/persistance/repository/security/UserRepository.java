@@ -1,6 +1,6 @@
-package amadorcf.es.springsecurityproject.persistance.repository;
+package amadorcf.es.springsecurityproject.persistance.repository.security;
 
-import amadorcf.es.springsecurityproject.persistance.entity.User;
+import amadorcf.es.springsecurityproject.persistance.entity.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

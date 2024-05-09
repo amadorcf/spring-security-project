@@ -2,9 +2,11 @@ package amadorcf.es.springsecurityproject.service.impl;
 
 import amadorcf.es.springsecurityproject.dto.SaveUser;
 import amadorcf.es.springsecurityproject.exception.InvalidPasswordException;
-import amadorcf.es.springsecurityproject.persistance.entity.User;
-import amadorcf.es.springsecurityproject.persistance.repository.UserRepository;
-import amadorcf.es.springsecurityproject.persistance.util.Role;
+import amadorcf.es.springsecurityproject.exception.ObjectNotFoundException;
+import amadorcf.es.springsecurityproject.persistance.entity.security.Role;
+import amadorcf.es.springsecurityproject.persistance.entity.security.User;
+import amadorcf.es.springsecurityproject.persistance.repository.security.UserRepository;
+import amadorcf.es.springsecurityproject.service.RoleService;
 import amadorcf.es.springsecurityproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     public User registerOneCustomer(SaveUser newUser) {
 
@@ -36,7 +41,10 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(newUser.getPassword() ));
         user.setUsername(newUser.getUsername());
         user.setName(newUser.getName());
-        user.setRole(Role.CUSTOMER);
+
+        Role defaultRole = roleService.findDefaultRole()
+                .orElseThrow(()-> new ObjectNotFoundException("Role not found. DeFault Role"));
+        user.setRole(defaultRole);
 
 
         return userRepository.save(user);

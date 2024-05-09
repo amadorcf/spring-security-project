@@ -1,12 +1,13 @@
-package amadorcf.es.springsecurityproject.service.auth;
+package amadorcf.es.springsecurityproject.persistance;
 
 import amadorcf.es.springsecurityproject.dto.RegisteredUser;
 import amadorcf.es.springsecurityproject.dto.SaveUser;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
 import amadorcf.es.springsecurityproject.exception.ObjectNotFoundException;
-import amadorcf.es.springsecurityproject.persistance.entity.User;
+import amadorcf.es.springsecurityproject.persistance.entity.security.User;
 import amadorcf.es.springsecurityproject.service.UserService;
+import amadorcf.es.springsecurityproject.service.auth.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +43,7 @@ public class AuthenticationService {
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setUsername(user.getUsername());
-        userDto.setRole(user.getRole().name()); //Nombre de la enumeracion
+        userDto.setRole(user.getRole().getName()); //Nombre de la enumeracion
 
         // Generamos el JWT
         String jwt = jwtService.generateToken(user, generateExtraClaims(user));
@@ -54,7 +55,7 @@ public class AuthenticationService {
     private Map<String, Object> generateExtraClaims(User user) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("name", user.getName());
-        extraClaims.put("role", user.getRole().name());
+        extraClaims.put("role", user.getRole().getName());
         extraClaims.put("authorities", user.getAuthorities());
 
         return extraClaims;

@@ -2,8 +2,8 @@ package amadorcf.es.springsecurityproject.controller;
 
 import amadorcf.es.springsecurityproject.dto.RegisteredUser;
 import amadorcf.es.springsecurityproject.dto.SaveUser;
-import amadorcf.es.springsecurityproject.persistance.entity.User;
-import amadorcf.es.springsecurityproject.service.auth.AuthenticationService;
+import amadorcf.es.springsecurityproject.persistance.entity.security.User;
+import amadorcf.es.springsecurityproject.persistance.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package amadorcf.es.springsecurityproject.service;
 
 import amadorcf.es.springsecurityproject.dto.SaveUser;
-import amadorcf.es.springsecurityproject.persistance.entity.User;
+import amadorcf.es.springsecurityproject.persistance.entity.security.User;
 
 import java.util.Optional;
 

@@ -1,12 +1,10 @@
-package amadorcf.es.springsecurityproject.persistance.entity;
+package amadorcf.es.springsecurityproject.persistance.entity.security;
 
 
-import amadorcf.es.springsecurityproject.persistance.util.Role;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 import java.util.Collection;
 import java.util.List;
@@ -28,8 +26,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    // Enumeracion de Roles - Se creara posteriormente la BBDD correspondiente
-    @Enumerated(EnumType.STRING)
+    // Enumeracion de Roles
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
 
 
@@ -41,15 +40,11 @@ public class User implements UserDetails {
         if(role.getPermissions() == null) return null;
 
         List<SimpleGrantedAuthority> authorities = role.getPermissions().stream()
-                .map(each-> each.name())
+                .map(each-> each.getOperation().getName())
                 .map(each -> new SimpleGrantedAuthority(each))
-//                .map(each->{
-//                    String permission = each.name();
-//                    return new SimpleGrantedAuthority(permission);
-//                })
                 .collect(Collectors.toList());
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.role.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+this.role.getName()));
         return authorities;
     }
 

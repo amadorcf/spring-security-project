@@ -1,7 +1,7 @@
 package amadorcf.es.springsecurityproject.config.security;
 
 import amadorcf.es.springsecurityproject.exception.ObjectNotFoundException;
-import amadorcf.es.springsecurityproject.persistance.repository.UserRepository;
+import amadorcf.es.springsecurityproject.persistance.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

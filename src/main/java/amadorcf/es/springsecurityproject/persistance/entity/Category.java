@@ -2,8 +2,6 @@ package amadorcf.es.springsecurityproject.persistance.entity;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-
 @Entity
 public class Category {
 
