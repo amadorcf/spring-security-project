@@ -38,6 +38,8 @@ public class CustomAuthorizationManager implements AuthorizationManager<RequestA
 
         String url = extractUrl(request);
         String httpMethod = request.getMethod();
+        System.out.println("url: "+ url);
+        System.out.println("httpMethod: "+ httpMethod);
 
         boolean isPublic = isPublic(url, httpMethod);
 
