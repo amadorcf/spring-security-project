@@ -33,6 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         System.out.println("Lanzando JWT AUTHENTICATION FILTER");
 
+/*
         //1. Obtener encabezado http llamado Authorization
         String authorizationHeader = request.getHeader("Authorization");//Bearer jwt
         if(!StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")){
@@ -42,6 +43,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         //2. Obtener token JWT desde el encabezado
         String jwt = authorizationHeader.split(" ")[1];
+*/
+        //Para no repetir los pasos 1 y 2 en el metodo LOGOUT creamos el siguiente metodo
+        String jwt = jwtService.extractJwtFromRequest(request);
+        if(jwt == null || !StringUtils.hasText(jwt)){
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         //3. Obtener el subject/username desde el token
         // esta accion a su vez valida el formato del token, firma y fecha de expiración

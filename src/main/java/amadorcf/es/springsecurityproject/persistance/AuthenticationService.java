@@ -5,9 +5,12 @@ import amadorcf.es.springsecurityproject.dto.SaveUser;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
 import amadorcf.es.springsecurityproject.exception.ObjectNotFoundException;
+import amadorcf.es.springsecurityproject.persistance.entity.security.JwtToken;
 import amadorcf.es.springsecurityproject.persistance.entity.security.User;
+import amadorcf.es.springsecurityproject.persistance.repository.security.JwtTokenRepository;
 import amadorcf.es.springsecurityproject.service.UserService;
 import amadorcf.es.springsecurityproject.service.auth.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,9 +18,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 // Se ha creado directamente sin Interface
 @Service
@@ -31,6 +36,10 @@ public class AuthenticationService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenRepository jwtRepository;
+
 
     // 14-03-24: Como no se ha creado interface por defecto da una respuesta vacia
     // Se corrige lo anterior devolviendo un dto del usuario con el correspondiente JWT
@@ -112,5 +121,18 @@ public class AuthenticationService {
 
         return null; // Esta instancia nunca se va a ejecutar ya que siempre se va a cumplir la condicion del if. Lo mantengo por si tuvieramos otras implementaciones de Authentication
 
+    }
+
+    public void logout(HttpServletRequest request) {
+
+        String jwt = jwtService.extractJwtFromRequest(request);
+        if(jwt == null || !StringUtils.hasText(jwt)) return;
+
+        Optional<JwtToken> token = jwtRepository.findByToken(jwt);
+
+        if(token.isPresent() && token.get().isValid()){
+            token.get().setValid(false);
+            jwtRepository.save(token.get());
+        }
     }
 }
