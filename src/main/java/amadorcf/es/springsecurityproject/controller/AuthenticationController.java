@@ -40,7 +40,7 @@ public class AuthenticationController {
     @PostMapping("/logout")
     public ResponseEntity<LogoutResponse> logout(HttpServletRequest request){
         authenticationService.logout(request);
-        return ResponseEntity.ok(new LogoutResponse("Logout completed."))
+        return ResponseEntity.ok(new LogoutResponse("Logout completed."));
     }
 
     @PreAuthorize("hasAuthority('READ_MY_PROFILE')")

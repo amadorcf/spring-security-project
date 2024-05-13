@@ -48,14 +48,18 @@ public class AuthenticationService {
         // Registrar un nuevo cliente, previamente se crea un usuario
         User user = userService.registerOneCustomer(newUser);
 
+        // Generamos el JWT
+        String jwt = jwtService.generateToken(user, generateExtraClaims(user));
+
+        // Guardamos el JWT en la BBDD para poder utilizarlo luego en el logout
+        saveUserToken(user, jwt);
+
+
         RegisteredUser userDto = new RegisteredUser();
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setUsername(user.getUsername());
         userDto.setRole(user.getRole().getName()); //Nombre de la enumeracion
-
-        // Generamos el JWT
-        String jwt = jwtService.generateToken(user, generateExtraClaims(user));
         userDto.setJwt(jwt);
 
         return userDto;
@@ -84,15 +88,28 @@ public class AuthenticationService {
 
         // Obtener detalles del usuario
         UserDetails user = userService.findOneByUsername(authRequest.getUsername()).get();
-
         // Crear jwt del usuario
         String jwt = jwtService.generateToken(user, generateExtraClaims((User) user));
+
+        // Guardamos el JWT en la BBDD para poder utilizarlo luego en el logout
+        saveUserToken((User) user, jwt);
 
         // Generar respuesta
         AuthenticationResponse authRes = new AuthenticationResponse();
         authRes.setJwt(jwt);
 
         return authRes;
+    }
+
+    private void saveUserToken(User user, String jwt) {
+
+        JwtToken token = new JwtToken();
+        token.setToken(jwt);
+        token.setUser(user);
+        token.setExpiration(jwtService.extractExpiration(jwt));
+        token.setValid(true);
+
+        jwtRepository.save(token);
     }
 
     public boolean validateToken(String jwt) {

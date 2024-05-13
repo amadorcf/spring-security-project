@@ -86,4 +86,10 @@ public class JwtService {
         return authorizationHeader.split(" ")[1];
 
     }
+
+    public Date extractExpiration(String jwt) {
+
+        return extractAllClaims(jwt).getExpiration();
+
+    }
 }
