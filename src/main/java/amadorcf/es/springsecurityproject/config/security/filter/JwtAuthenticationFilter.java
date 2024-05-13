@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean validateToken(Optional<JwtToken> optionalToken) {
 
         if(!optionalToken.isPresent()){
-            System.out.println("Token do not exist or invalid generation");
+            System.out.println("Token does not exist or invalid generation");
             return false;
         }
 
