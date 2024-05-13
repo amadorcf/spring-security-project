@@ -20,6 +20,7 @@ public enum RoleEnum {
 
         RolePermissionEnum.READ_MY_PROFILE
     )),
+
     ASSISTANT_ADMINISTRATOR(Arrays.asList(
         RolePermissionEnum.READ_ALL_PRODUCTS,
         RolePermissionEnum.READ_ONE_PRODUCT,
@@ -33,6 +34,17 @@ public enum RoleEnum {
 
         RolePermissionEnum.READ_MY_PROFILE
     )),
+
+    CONSULTANT(Arrays.asList(
+            RolePermissionEnum.READ_ALL_PRODUCTS,
+            RolePermissionEnum.READ_ONE_PRODUCT,
+
+            RolePermissionEnum.READ_ALL_CATEGORIES,
+            RolePermissionEnum.READ_ONE_CATEGORY,
+
+            RolePermissionEnum.READ_MY_PROFILE
+    )),
+
     CUSTOMER(Arrays.asList(
         RolePermissionEnum.READ_MY_PROFILE
     ));

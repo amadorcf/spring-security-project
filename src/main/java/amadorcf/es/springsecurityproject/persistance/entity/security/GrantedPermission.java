@@ -18,6 +18,7 @@ public class GrantedPermission {
     @JoinColumn(name = "operation_id")
     private Operation operation;
 
+
     public Long getId() {
         return id;
     }
