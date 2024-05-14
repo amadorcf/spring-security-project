@@ -1,9 +1,11 @@
 package amadorcf.es.springsecurityproject.controller;
 
+import amadorcf.es.springsecurityproject.dto.LogoutResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationResponse;
 import amadorcf.es.springsecurityproject.dto.auth.AuthenticationRequest;
 import amadorcf.es.springsecurityproject.persistance.entity.security.User;
 import amadorcf.es.springsecurityproject.persistance.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,12 @@ public class AuthenticationController {
         AuthenticationResponse res = authenticationService.login(authenticationRequest);
 
         return ResponseEntity.ok(res);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<LogoutResponse> logout(HttpServletRequest request){
+        authenticationService.logout(request);
+        return ResponseEntity.ok(new LogoutResponse("Logout completed."));
     }
 
     @PreAuthorize("hasAuthority('READ_MY_PROFILE')")
