@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
+//@CrossOrigin //Podemos limitar el acceso solo para peticiones desde un cliente por ejemplo desde google con (origins = "https://www.google.com")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
