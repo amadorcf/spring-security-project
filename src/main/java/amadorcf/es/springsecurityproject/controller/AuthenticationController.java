@@ -27,6 +27,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(isTokenValid);
     }
 
+    //@CrossOrigin // Necesario para habilitar el intercambio de recursos entre origenes diferentes
     @PreAuthorize("permitAll")
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
